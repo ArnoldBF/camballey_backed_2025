@@ -1,10 +1,10 @@
 import { Persona } from "../entities/persona.entity";
-
 import { AppDataSource } from "../config/orm";
 import { Usuario } from "../entities/usuario.entity";
 import { Rol } from "../entities/rol.entity";
 import bycript from "bcrypt";
 import { Double } from "typeorm";
+import boom from "@hapi/boom";
 
 interface ICrearPersona {
     nombre: string;
@@ -26,7 +26,7 @@ export class PersonaService {
 
     constructor() {}
 
-    public async createPerson(data: ICrearPersona): Promise<number> {
+    public async createPerson(data: ICrearPersona): Promise<Usuario> {
         const correoExiste = await this.personaRepository.findOneBy({
             correo: data.correo,
         });
@@ -36,10 +36,10 @@ export class PersonaService {
         });
 
         if (correoExiste) {
-            throw new Error("Correo already exists");
+            throw boom.conflict("Correo ya existe");
         }
         if (!rolExiste) {
-            throw new Error("Rol not found");
+            throw boom.notFound("Rol no encontrado");
         }
 
         if (data.password) {
@@ -61,6 +61,6 @@ export class PersonaService {
 
         await this.usuarioRepository.save(nuevoUsuario);
 
-        return 0;
+        return nuevoUsuario;
     }
 }

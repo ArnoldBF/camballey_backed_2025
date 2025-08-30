@@ -17,7 +17,7 @@ export class Rol {
     nombre!: string;
 
     @Column({ type: "text" })
-    Descripcion!: string;
+    descripcion!: string;
 
     @CreateDateColumn()
     createdAt!: Date;

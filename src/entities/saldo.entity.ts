@@ -17,7 +17,7 @@ export class Saldo {
     id!: number;
 
     @Column({ type: "decimal" })
-    monto!: Double;
+    monto!: number;
 
     @CreateDateColumn()
     createdAt!: Date;

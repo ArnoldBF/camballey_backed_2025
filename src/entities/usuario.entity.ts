@@ -14,6 +14,8 @@ import { Saldo } from "./saldo.entity";
 import { Rol } from "./rol.entity";
 import { Viaje } from "./viaje.entity";
 
+import { Transporte } from "./transporte.entity";
+
 @Entity("usuarios")
 export class Usuario {
     @PrimaryGeneratedColumn()
@@ -46,4 +48,7 @@ export class Usuario {
 
     @OneToMany(() => Viaje, (viaje) => viaje.usuario)
     viajes!: Viaje[];
+
+    @OneToOne(() => Transporte, (transporte) => transporte.chofer)
+    transporte!: Transporte;
 }
