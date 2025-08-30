@@ -4,6 +4,7 @@ import boom from "@hapi/boom";
 import { envConfig } from "../config/env";
 import { Usuario } from "../entities/usuario.entity";
 import { AppDataSource } from "../config/orm";
+import { utimesSync } from "fs";
 
 export class AuthService {
     private readonly usuarioRepository = AppDataSource.getRepository(Usuario);
@@ -35,6 +36,7 @@ export class AuthService {
             sub: usuario.id,
             rol: usuario.rol.id,
             userName: usuario.userName,
+            fullName: `${usuario.persona.nombre} ${usuario.persona.apellido}`,
         };
 
         if (!envConfig.jwtSecret) {

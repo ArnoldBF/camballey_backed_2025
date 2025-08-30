@@ -82,6 +82,8 @@ export class ViajeService {
                     id: usuarioId,
                 },
             },
+
+            relations: ["transporte"],
         });
     }
 }
