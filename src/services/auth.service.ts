@@ -15,7 +15,7 @@ export class AuthService {
     ): Promise<Partial<Usuario>> {
         const usuario = await this.usuarioRepository.findOne({
             where: { userName: userNameParm },
-            relations: ["rol"],
+            relations: ["rol", "persona"],
         });
         if (
             !usuario ||
