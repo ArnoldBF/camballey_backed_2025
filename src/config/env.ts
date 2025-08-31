@@ -11,4 +11,6 @@ export const envConfig = {
     nodeEnv: process.env.NODE_ENV,
     jwtSecret: String(process.env.JWT_SECRET),
     jwtSecretRecovery: String(process.env.JWT_SECRET_RECOVERY),
+    googleClientId: String(process.env.GOOGLE_CLIENT_ID),
+    googleClientSecret: String(process.env.GOOGLE_CLIENT_SECRET),
 };
