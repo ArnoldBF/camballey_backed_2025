@@ -57,9 +57,25 @@ export class Server {
 
         this.io.on("connection", (socket) => {
             console.log("Usuario conectado", socket.id);
-            socket.on("join", ({ sala }) => {
+
+            socket.on("join", (payload) => {
+                const sala =
+                    typeof payload === "string"
+                        ? payload
+                        : (payload && payload.sala) || "";
+
+                if (!sala) {
+                    console.log("join sin sala válida:", payload);
+                    return;
+                }
+
                 socket.join(sala);
                 console.log(`Socket ${socket.id} unido a sala ${sala}`);
+                socket.emit("joined", sala);
+            });
+
+            socket.on("disconnect", () => {
+                console.log("Usuario desconectado", socket.id);
             });
         });
         // this.setupSwagger();
