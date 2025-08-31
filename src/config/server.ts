@@ -1,4 +1,7 @@
 import express, { type Application } from "express";
+import { Server as HttpServer } from "http";
+
+import { Server as SocketIOServer } from "socket.io";
 
 import { envConfig } from "./env";
 import { connectDatabase } from "./orm";
@@ -27,8 +30,9 @@ import "../helpers/auth";
 export class Server {
     public app: Application;
     public port: number;
+    public io: SocketIOServer;
+    public httpServer: HttpServer;
     public paths: { [key: string]: string };
-    // private fileManeger: FileManager;
     constructor() {
         this.app = express();
         this.port = envConfig.port;
@@ -45,6 +49,15 @@ export class Server {
         this.middlewares();
         this.dbConection();
         this.routes();
+
+        this.httpServer = new HttpServer(this.app);
+        this.io = new SocketIOServer(this.httpServer, {
+            cors: { origin: "*" },
+        });
+
+        this.io.on("connection", (socket) => {
+            console.log("Usuario conectado", socket.id);
+        });
         // this.setupSwagger();
     }
 
@@ -73,7 +86,7 @@ export class Server {
     }
 
     public listen() {
-        this.app.listen(this.port, () => {
+        this.httpServer.listen(this.port, () => {
             console.log(`Server running on port ${this.port}`);
         });
     }

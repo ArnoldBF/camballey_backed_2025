@@ -4,6 +4,7 @@ import { Usuario } from "../entities/usuario.entity";
 import { Transporte } from "../entities/transporte.entity";
 import { Saldo } from "../entities/saldo.entity";
 import boom from "@hapi/boom";
+import { io } from "../main";
 
 interface ICreateViaje {
     monto: number;
@@ -71,6 +72,19 @@ export class ViajeService {
         });
 
         const viajeGuardado = await this.viajeRepository.save(viaje);
+        io.to(`usuario_${pasajero.id}`).emit("saldoDescontado", {
+            usuarioId: pasajero.id,
+            montoDescontado: data.monto,
+            nuevoSaldo: saldoPasajero.monto,
+            viaje: viajeGuardado,
+        });
+
+        io.to(`usuario_${chofer.id}`).emit("saldoAbonado", {
+            usuarioId: chofer.id,
+            montoAbonado: data.monto,
+            nuevoSaldo: saldoChofer.monto,
+            viaje: viajeGuardado,
+        });
 
         return viajeGuardado;
     }
