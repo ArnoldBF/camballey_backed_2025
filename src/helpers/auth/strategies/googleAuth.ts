@@ -53,6 +53,10 @@ passport.use(
                     AppDataSource.getRepository("Persona");
                 const persona = personaRepository.create({
                     nombre: profile.displayName,
+                    apellido: profile.name?.familyName,
+                    ci: "",
+                    telefono: "",
+                    edad: 0,
                     correo: email,
                 });
                 await personaRepository.save(persona);
