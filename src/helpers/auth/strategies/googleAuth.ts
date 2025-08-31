@@ -5,8 +5,8 @@ import { envConfig } from "../../../config/env";
 passport.use(
     new GoogleStrategy(
         {
-            clientID: envConfig.googleClientId,
-            clientSecret: envConfig.googleClientSecret,
+            clientID: String(envConfig.googleClientId),
+            clientSecret: String(envConfig.googleClientSecret),
             callbackURL:
                 "https://camballeybacked2025-production.up.railway.app/api/auth/google/callback",
         },
