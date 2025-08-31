@@ -24,7 +24,7 @@ export class ViajeService {
     public async create(data: ICreateViaje) {
         const pasajero = await this.usuarioRepository.findOne({
             where: { id: data.usuarioId },
-            relations: ["rol", "saldo"],
+            relations: ["rol", "saldo", "persona"],
         });
 
         // Buscar transporte y chofer
