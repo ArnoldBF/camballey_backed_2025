@@ -14,6 +14,8 @@ passport.use(
                 "https://camballeybacked2025-production.up.railway.app/api/auth/google/callback",
         },
         async (accessToken, refreshToken, profile, done) => {
+            console.log("Google profile:", profile);
+            console.log("google profile:", profile);
             const email = profile.emails?.[0]?.value ?? "";
             const userName = email ? email.split("@")[0] : "";
 
