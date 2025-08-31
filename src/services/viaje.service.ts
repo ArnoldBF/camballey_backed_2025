@@ -76,14 +76,12 @@ export class ViajeService {
             usuarioId: pasajero.id,
             montoDescontado: data.monto,
             nuevoSaldo: saldoPasajero.monto,
-            viaje: viajeGuardado,
         });
 
         io.to(`usuario_${chofer.id}`).emit("saldoAbonado", {
             usuarioId: chofer.id,
             montoAbonado: data.monto,
             nuevoSaldo: saldoChofer.monto,
-            viaje: viajeGuardado,
         });
 
         return viajeGuardado;
