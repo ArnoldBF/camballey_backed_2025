@@ -57,6 +57,10 @@ export class Server {
 
         this.io.on("connection", (socket) => {
             console.log("Usuario conectado", socket.id);
+            socket.on("join", ({ sala }) => {
+                socket.join(sala);
+                console.log(`Socket ${socket.id} unido a sala ${sala}`);
+            });
         });
         // this.setupSwagger();
     }
