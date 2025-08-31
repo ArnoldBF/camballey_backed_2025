@@ -80,6 +80,7 @@ export class ViajeService {
 
         io.to(`usuario_${chofer.id}`).emit("saldoAbonado", {
             usuarioId: chofer.id,
+            pasajeroEmisor: pasajero.persona.nombre,
             montoAbonado: data.monto,
             nuevoSaldo: saldoChofer.monto,
         });
